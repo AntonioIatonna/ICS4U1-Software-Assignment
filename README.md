@@ -1,2 +1,2 @@
 # ICS4U1-Software-Assignment
-Repository for the ICS4U1 Software Assignment
+Contains all files, programs, and programming projects completed during the duration of the course.
