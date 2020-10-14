@@ -7,7 +7,12 @@ cpuTicket = []
 matches = []
 
 print("Welcome to Lotto 6/49!\nPlease choose how many tickets you would like to play...")
-ticketNumber = int(input())
+while True:
+    try:
+        ticketNumber = int(input())
+        break
+    except:
+        print("Please input a valid number!")
 
 # sets up 2d array for number of tickets and numbers for each ticket
 tickets = [0] * ticketNumber
@@ -21,7 +26,17 @@ for x in range(ticketNumber):
     print("Please select your numbers for ticket " + str(x + 1))
     for y in range(6):
         print("Please select number " + str(y + 1))
-        tickets[x][y] = int(input())
+        while True: 
+            try:
+                num = int(input())
+                for t in range(6):
+                    while(num == tickets[x][t] or num > 49):
+                        print("Number is already in use on this ticket or is greater than 49! Pick again.")
+                        num = int(input())
+                break
+            except:
+                print("Please enter a valid number!")
+        tickets[x][y] = num
         
     #improve sort (sort as you go)
     for j in range(6):
