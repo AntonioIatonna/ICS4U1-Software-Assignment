@@ -72,8 +72,6 @@ for w in range(ticketNumber):
         for v in range(6):
             if(tickets[w][z] == cpuTicket[v]):
                 userMatch +=1
-            else:
-                pass
     matches.append(userMatch)
 
 # check if user won and print result
