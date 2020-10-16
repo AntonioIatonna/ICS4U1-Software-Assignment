@@ -8,7 +8,7 @@ matches = []
 terminalText = ""
 u = -1
 
-def printResults(): # function created to reduce loop time
+def printResults(): # Function created to reduce loop time
     global u
     u += 1
     if(matches[u] >= 3):
@@ -17,7 +17,8 @@ def printResults(): # function created to reduce loop time
         label_terminal.configure(text = "Sorry. You did not win on ticket " + str(u + 1) + " with only " + str(matches[u]) + " numbers matching.")
     root.after(5000, mainloop)
 
-root = Tk() # Create graphics window and set essential configurations
+# Create graphics window and set essential configurations
+root = Tk() 
 root.title("Lotto 6/49")
 root.grid_columnconfigure(1, weight = 20, uniform = "key")
 
@@ -49,14 +50,14 @@ while(True):
     except:
         label_terminal.configure(text = "Please input a valid number!")
     
-# sets up 2d array for number of tickets and numbers for each ticket
+# Sets up 2d array for number of tickets and numbers for each ticket
 tickets = [0] * ticketNumber
 for i in range(ticketNumber):
     tickets[i] = [0] * 6
-# configures array for cpu ticket
+# Configure array for cpu ticket
 cpuTicket = [0] * 6
 
-# recieves user input for the numbers on each ticket
+# Recieves user input for the numbers on each ticket
 for x in range(ticketNumber):
     label_terminal.configure(text = "Please select your numbers for ticket " + str(x + 1))
     for y in range(6):
@@ -72,8 +73,7 @@ for x in range(ticketNumber):
             except:
                 label_terminal.configure(text = "Please enter a valid number!")
         tickets[x][y] = num
-
-    # sort each ticket
+    # Sort each ticket
     for j in range(6):
         for k in range(j + 1, 6):
             if(tickets[x][j] > tickets[x][k]):
@@ -84,14 +84,14 @@ for x in range(ticketNumber):
     # Insert each user ticket into listbox
     userList.insert(END, tickets[x])
 
-# generate and sort winning ticket and check and replace duplicate numbers
+# Generate and sort winning ticket and check for and replace duplicate numbers
 for m in range(6):
     num = random.randint(1, 49)
     for n in range(6):
         while(num == cpuTicket[n]):
             num = random.randint(1, 49)
     cpuTicket[m] = num    
-# sort cpu ticket
+# Sort cpu ticket
 for a in range(6):
     for b in range(a + 1, 6):
         if(cpuTicket[a] > cpuTicket[b]):
@@ -99,9 +99,10 @@ for a in range(6):
             cpuTicket[a] = cpuTicket[b]
             cpuTicket[b] = temp
 
+# Insert cpu ticket to listbox
 cpuList.insert(END, cpuTicket)
 
-# compare all user tickets to winning ticket
+# Compare all user tickets to winning ticket
 label_terminal.configure(text = "Checking user tickets...")
 for w in range(ticketNumber):
     userMatch = 0
@@ -111,7 +112,7 @@ for w in range(ticketNumber):
                 userMatch +=1
     matches.append(userMatch)
 
-# run function to check if user won and print result
+# Run function to check if user won and print result
 for g in range(ticketNumber):
     root.after(5000, printResults)
     time.sleep(2)
