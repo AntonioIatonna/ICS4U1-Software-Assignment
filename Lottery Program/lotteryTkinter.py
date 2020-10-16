@@ -28,9 +28,6 @@ label_1.grid(row = 1, column = 0)
 label_2 = Label(root, text = "Winning Ticket", font = "Verdana 8 bold")
 label_2.grid(row = 1, column = 10)
 
-label_3 = Label(root, text = "Enter Inputs")
-label_3.grid(row = 4, column = 0, columnspan = 11)
-
 label_terminal = Label(root, text = terminalText)
 label_terminal.grid(row = 10, columnspan = 11, pady = 10)
 
