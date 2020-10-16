@@ -6,7 +6,16 @@ tickets = []
 cpuTicket = []
 matches = []
 terminalText = ""
-# entryData = ""
+u = -1
+
+def printResults(): # function created to reduce loop time
+    global u
+    u += 1
+    if(matches[u] >= 3):
+        label_terminal.configure(text = "Congratulations! You won on ticket " + str(u + 1) + " with " + str(matches[u]) + " numbers!")
+    else:
+        label_terminal.configure(text = "Sorry. You did not win on ticket " + str(u + 1) + " with only " + str(matches[u]) + " numbers matching.")
+    root.after(5000, mainloop)
 
 root = Tk() # Create graphics window and set essential configurations
 root.title("Lotto 6/49")
@@ -93,6 +102,7 @@ for a in range(6):
 cpuList.insert(END, cpuTicket)
 
 # compare all user tickets to winning ticket
+label_terminal.configure(text = "Checking user tickets...")
 for w in range(ticketNumber):
     userMatch = 0
     for z in range(6):
@@ -101,12 +111,9 @@ for w in range(ticketNumber):
                 userMatch +=1
     matches.append(userMatch)
 
-# check if user won and print result
-for u in range(ticketNumber):
-    if(matches[u] >= 3):
-        label_terminal.configure(text = "Congratulations! You won on ticket " + str(u + 1) + " with " + str(matches[u]) + " numbers!")
-    else:
-        label_terminal.configure(text = "Sorry. You did not win on ticket " + str(u + 1) + " with only " + str(matches[u]) + " numbers matching.")
+# run function to check if user won and print result
+for g in range(ticketNumber):
+    root.after(5000, printResults)
     time.sleep(2)
 
 root.mainloop() # Keep window on screen
