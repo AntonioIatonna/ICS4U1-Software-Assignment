@@ -1,6 +1,18 @@
 from tkinter import *
+import time
 
 #tickets = [[1, 2, 3, 4, 5, 6][7, 8, 9, 10, 11, 12]]
+#global entryData
+entryData = "Obama"
+
+
+def getData(event):
+    print("in")
+    global entryData
+    entryData = userInput.get()
+    print("out")
+    print(entryData)
+
 
 root = Tk() # Create graphics window
 root.title("Lotto 6/49")
@@ -39,9 +51,8 @@ userInput = Entry(root)
 userInput.configure(justify = "center")
 userInput.grid(row = 5, column = 0, pady = 5, columnspan = 11)
 
-uInput = userInput.get()
-username = uInput
-print(username)
+root.bind("<Return>", getData)
+print(entryData)
 
 # Insert each user ticket into listbox
 #userArrays.insert(END, tickets[x])
