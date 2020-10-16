@@ -8,10 +8,6 @@ matches = []
 terminalText = ""
 # entryData = ""
 
-# def getData(event):
-#     global entryData
-#     entryData = int(userInput.get())
-
 root = Tk() # Create graphics window and set essential configurations
 root.title("Lotto 6/49")
 root.grid_columnconfigure(1, weight = 20, uniform = "key")
@@ -42,9 +38,6 @@ label_terminal.grid(row = 10, columnspan = 11, pady = 10)
 userInput = Entry(root)
 userInput.configure(justify = "center")
 userInput.grid(row = 5, column = 0, pady = 5, columnspan = 11)
-
-# # Bind Keys
-# root.bind("<Return>", getData)
 
 # Begin Code
 label_terminal.configure(text = "Welcome to Lotto 6/49!\nPlease choose how many tickets you would like to play...")
