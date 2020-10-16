@@ -34,11 +34,6 @@ label_3.grid(row = 4, column = 0, columnspan = 11)
 label_terminal = Label(root, text = terminalText)
 label_terminal.grid(row = 10, columnspan = 11, pady = 10)
 
-#Creating Entrys
-userInput = Entry(root)
-userInput.configure(justify = "center")
-userInput.grid(row = 5, column = 0, pady = 5, columnspan = 11)
-
 # Begin Code
 label_terminal.configure(text = "Welcome to Lotto 6/49!\nPlease choose how many tickets you would like to play...")
 while(True):
