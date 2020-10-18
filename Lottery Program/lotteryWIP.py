@@ -5,13 +5,12 @@ import random
 tickets = []
 cpuTicket = []
 matches = []
-
-# Create graphics window and set essential configurations
-root = Tk() 
-root.title("Lotto 6/49")
-root.grid_columnconfigure(1, weight = 20, uniform = "key")
+printTickets = []
+tFrames = []
+rFrames = []
 
 # Begin Code
+# Get user ticket quantity
 print("Welcome to Lotto 6/49!\nPlease choose how many tickets you would like to play...")
 while True:
     try:
@@ -20,6 +19,51 @@ while True:
     except:
         print("Please input a valid number!")
 
+# Graphics window setup begins
+# Create graphics window and set essential configurations
+root = Tk() 
+root.title("Lotto 6/49")
+root.grid_columnconfigure(1, weight = 20, uniform = "key")
+
+# Creating Frames
+instructions = LabelFrame(root, text = "Instructions", padx = 20, pady = 5)
+instructions.grid(row = 0, column = 5, columnspan = 11)
+
+winningTicket = LabelFrame(root, text = "Winning Ticket", padx = 10, pady = 10)
+winningTicket.grid(row = 10, column = 5, columnspan = 11)
+
+for o in range(ticketNumber):
+    ticketFrames = LabelFrame(root, text = "Ticket " + str((o + 1)))
+    ticketFrames.grid(row = o + 2, column = 0, padx = 20)
+    tFrames.append(ticketFrames)
+
+    resultFrames = Frame(root)
+    resultFrames.grid(row = o + 2, column = 10)
+    rFrames.append(resultFrames)
+
+# Create starting labels
+label_1 = Label(root, text = "User Tickets", font = "Verdana 8 bold")
+label_1.grid(row = 1, column = 0)
+
+label_2 = Label(root, text = "User Results", font = "Verdana 8 bold")
+label_2.grid(row = 1, column = 10)
+
+label_3 = Label(root, text = "Winning Ticket", font = "Verdana 8 bold")
+label_3.grid(row = 9, column = 5, columnspan = 11)
+
+label_terminal = Label(instructions, text = "")
+label_terminal.grid(row = 0, column = 5)
+
+label_winning = Label(winningTicket, text = "")
+label_winning.grid(row = 0, column = 5)
+
+for g in range(ticketNumber):
+        ticket_label = Label(tFrames[g], text = "", width = 12)
+        ticket_label.grid(row = g, column = 0, padx = 20, pady = 5)
+        printTickets.append(ticket_label)
+# Graphics window setup ends
+
+# Remainder of code
 # sets up 2d array for number of tickets and numbers for each ticket
 tickets = [0] * ticketNumber
 for i in range(ticketNumber):
@@ -29,19 +73,19 @@ cpuTicket = [0] * 6
 
 # recieves user input for the numbers on each ticket
 for x in range(ticketNumber):
-    print("Please select your numbers for ticket " + str(x + 1))
+    label_terminal.configure(text = "Please select your numbers for ticket " + str(x + 1))
     for y in range(6):
-        print("Please select number " + str(y + 1))
+        label_terminal.configure(text = "Please select number " + str(y + 1))
         while True: 
             try:
                 num = int(input())
                 for t in range(6):
                     while(num == tickets[x][t] or num > 49):
-                        print("Number is already in use on this ticket or is greater than 49! Pick again.")
+                        label_terminal.configure(text = "Number is already in use on this ticket or is greater than 49! Pick again.")
                         num = int(input())
                 break
             except:
-                print("Please enter a valid number!")
+                label_terminal.configure(text = "Please enter a valid number!")
         tickets[x][y] = num       
     # sort each ticket
     for j in range(6):
@@ -50,8 +94,8 @@ for x in range(ticketNumber):
                 temp = tickets[x][j]
                 tickets[x][j] = tickets[x][k]
                 tickets[x][k] = temp
-
-    print(tickets[x])
+    
+    printTickets[x].configure(text = tickets[x])
 
 # generate and sort winning ticket and check far and replace duplicate numbers
 for m in range(6):
@@ -68,10 +112,10 @@ for a in range(6):
             cpuTicket[a] = cpuTicket[b]
             cpuTicket[b] = temp
 
-print(cpuTicket)
+label_winning.configure(text = cpuTicket)
 
 # compare all user tickets to winning ticket
-print("Checking user tickets...")
+label_terminal.configure(text = "Checking user tickets...")
 for w in range(ticketNumber):
     userMatch = 0
     for z in range(6):
@@ -83,9 +127,9 @@ for w in range(ticketNumber):
 # check if user won and print result
 for u in range(ticketNumber):
     if(matches[u] >= 3):
-        print("Congratulations! You won on ticket " + str(u + 1) + " with " + str(matches[u]) + " numbers!")
+        label_terminal.configure(text = "Congratulations! You won on ticket " + str(u + 1) + " with " + str(matches[u]) + " numbers!")
     else:
-        print("Sorry. You did not win on ticket " + str(u + 1) + " with only " + str(matches[u]) + " numbers matching.")
+        label_terminal.configure(text = "Sorry. You did not win on ticket " + str(u + 1) + " with only " + str(matches[u]) + " numbers matching.")
     time.sleep(2)
 
 root.mainloop() # Keep window on screen
