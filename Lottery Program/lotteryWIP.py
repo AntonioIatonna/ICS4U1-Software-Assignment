@@ -6,6 +6,7 @@ tickets = []
 cpuTicket = []
 matches = []
 printTickets = []
+printResults = []
 tFrames = []
 rFrames = []
 
@@ -29,7 +30,7 @@ root.grid_columnconfigure(1, weight = 20, uniform = "key")
 instructions = LabelFrame(root, text = "Instructions", padx = 20, pady = 5)
 instructions.grid(row = 0, column = 5, columnspan = 11)
 
-winningTicket = LabelFrame(root, text = "Winning Ticket", padx = 10, pady = 10)
+winningTicket = LabelFrame(root, text = "Winning Lottery Numbers", padx = 10, pady = 10)
 winningTicket.grid(row = 10, column = 5, columnspan = 11)
 
 for o in range(ticketNumber):
@@ -37,8 +38,8 @@ for o in range(ticketNumber):
     ticketFrames.grid(row = o + 2, column = 0, padx = 20)
     tFrames.append(ticketFrames)
 
-    resultFrames = Frame(root)
-    resultFrames.grid(row = o + 2, column = 10)
+    resultFrames = LabelFrame(root, text = "Ticket " + str((o + 1)))
+    resultFrames.grid(row = o + 2, column = 100, padx = 20)
     rFrames.append(resultFrames)
 
 # Create starting labels
@@ -46,21 +47,26 @@ label_1 = Label(root, text = "User Tickets", font = "Verdana 8 bold")
 label_1.grid(row = 1, column = 0)
 
 label_2 = Label(root, text = "User Results", font = "Verdana 8 bold")
-label_2.grid(row = 1, column = 10)
+label_2.grid(row = 1, column = 100)
 
-label_3 = Label(root, text = "Winning Ticket", font = "Verdana 8 bold")
+label_3 = Label(root, text = "Winning Lottery Numbers", font = "Verdana 8 bold")
 label_3.grid(row = 9, column = 5, columnspan = 11)
 
-label_terminal = Label(instructions, text = "")
+label_terminal = Label(instructions, text = "", width = 30, height = 2)
 label_terminal.grid(row = 0, column = 5)
 
-label_winning = Label(winningTicket, text = "")
+label_winning = Label(winningTicket, text = "", width = 30)
 label_winning.grid(row = 0, column = 5)
 
 for g in range(ticketNumber):
-        ticket_label = Label(tFrames[g], text = "", width = 12)
+        ticket_label = Label(tFrames[g], text = "", width = 24)
         ticket_label.grid(row = g, column = 0, padx = 20, pady = 5)
         printTickets.append(ticket_label)
+
+        result_label = Label(rFrames[g], text = "", width = 24)
+        result_label.grid(row = g, column = 100, padx = 20, pady = 5)
+        printResults.append(result_label)
+
 # Graphics window setup ends
 
 # Remainder of code
@@ -73,9 +79,8 @@ cpuTicket = [0] * 6
 
 # recieves user input for the numbers on each ticket
 for x in range(ticketNumber):
-    label_terminal.configure(text = "Please select your numbers for ticket " + str(x + 1))
     for y in range(6):
-        label_terminal.configure(text = "Please select number " + str(y + 1))
+        label_terminal.configure(text = "Please select your numbers for ticket " + str(x + 1) + "...\nPlease select number " + str(y + 1))
         while True: 
             try:
                 num = int(input())
@@ -127,9 +132,10 @@ for w in range(ticketNumber):
 # check if user won and print result
 for u in range(ticketNumber):
     if(matches[u] >= 3):
-        label_terminal.configure(text = "Congratulations! You won on ticket " + str(u + 1) + " with " + str(matches[u]) + " numbers!")
+        printResults[u].configure(text = "Winner! " + str(matches[u]) + " numbers matched!")
     else:
-        label_terminal.configure(text = "Sorry. You did not win on ticket " + str(u + 1) + " with only " + str(matches[u]) + " numbers matching.")
+        printResults[u].configure(text = "You Lost! " + str(matches[u]) + " numbers matched.")
     time.sleep(2)
 
+label_terminal.configure(text = "Results...")
 root.mainloop() # Keep window on screen
