@@ -52,7 +52,7 @@ label_2.grid(row = 1, column = 100)
 label_3 = Label(root, text = "Winning Lottery Numbers", font = "Verdana 8 bold")
 label_3.grid(row = 9, column = 5, columnspan = 11)
 
-label_terminal = Label(instructions, text = "", width = 30, height = 2)
+label_terminal = Label(instructions, text = "", width = 55, height = 2)
 label_terminal.grid(row = 0, column = 5)
 
 label_winning = Label(winningTicket, text = "", width = 30)
