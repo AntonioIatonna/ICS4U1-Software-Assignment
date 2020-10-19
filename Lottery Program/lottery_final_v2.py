@@ -69,8 +69,8 @@ for g in range(ticketNumber):
 
 # Graphics window setup ends
 
-# Remainder of code
-# sets up 2d array for number of tickets and numbers for each ticket
+# Remainder of code begins
+# configures 2d array for number of tickets and numbers for each ticket
 tickets = [0] * ticketNumber
 for i in range(ticketNumber):
     tickets[i] = [0] * 6
