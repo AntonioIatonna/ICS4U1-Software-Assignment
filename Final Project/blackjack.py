@@ -69,20 +69,33 @@ card8 = [Spades8, Clubs8, Hearts8, Diamonds8]
 card9 = [Spades9, Clubs9, Hearts9, Diamonds9]
 card10 = [Spades10, Clubs10, Hearts10, Diamonds10, JSpades, JClubs, JHearts, JDiamonds, QSpades, QClubs, QHearts, QDiamonds, KSpades, KClubs, KHearts, KDiamonds]
 
+# Colours
+grey = (192, 192, 192)
+black = (0, 0, 0)
+
 # Begin main code
 # Init game
 pygame.init()
 screen = pygame.display.set_mode((650, 500))
 pygame.display.set_caption("Blackjack")
+font= pygame.font.SysFont('eras bold itc', 30)
 running = True
+stand = False
+gameover = False
 
 # Create background
 background = pygame.Surface(screen.get_size())
 background = background.convert()
 background.fill((80, 150, 15))
+hitButton = pygame.draw.rect(background, grey, (10, 445, 90, 40))
+standButton = pygame.draw.rect(background, grey, (10, 390, 90, 40))
+hitText = font.render("Hit", True, black)
+standText = font.render("Stand", True, black)
 
 # Show objects on screen
 screen.blit(background, (0, 0))
+screen.blit(hitText, (40, 458))
+screen.blit(standText, (25, 402))
 
 userCards = []
 dealerCards = []
