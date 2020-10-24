@@ -58,7 +58,6 @@ KDiamonds = pygame.image.load('Final Project/assets/cards/kd.png')
 
 # Creating card arrays
 cards = [ASpades, AClubs, AHearts, ADiamonds, Spades2, Clubs2, Hearts2, Diamonds2, Spades3, Clubs3, Diamonds3, Spades4, Clubs4, Hearts4, Diamonds4, Spades5, Clubs5, Hearts5, Diamonds5, Spades6, Clubs6, Hearts6, Diamonds6, Spades7, Clubs7, Hearts7, Diamonds7, Spades8, Clubs8, Hearts8, Diamonds8, Spades9, Clubs9, Hearts9, Diamonds9, Spades10, Clubs10, Hearts10, Diamonds10, JSpades, JClubs, JHearts, JDiamonds, QSpades, QClubs, QHearts, QDiamonds, KSpades, KClubs, KHearts, KDiamonds]
-cardA = [ASpades, AClubs, AHearts, ADiamonds]
 card2 = [Spades2, Clubs2, Hearts2, Diamonds2]
 card3 = [Spades3, Clubs3, Hearts3, Diamonds3]
 card4 = [Spades4, Clubs4, Hearts4, Diamonds4]
@@ -68,10 +67,43 @@ card7 = [Spades7, Clubs7, Hearts7, Diamonds7]
 card8 = [Spades8, Clubs8, Hearts8, Diamonds8]
 card9 = [Spades9, Clubs9, Hearts9, Diamonds9]
 card10 = [Spades10, Clubs10, Hearts10, Diamonds10, JSpades, JClubs, JHearts, JDiamonds, QSpades, QClubs, QHearts, QDiamonds, KSpades, KClubs, KHearts, KDiamonds]
+cardA = [ASpades, AClubs, AHearts, ADiamonds]
 
 # Colours
 grey = (192, 192, 192)
 black = (0, 0, 0)
+green = (80, 150, 15)
+red = (128, 10, 10)
+
+def getCard():
+    card = random.choice(cards)
+    cards.remove(card)
+    screen.blit(card, (10, 10))
+    return card
+
+def getValue(card):
+    if(card in card2):
+        return 2
+    elif(card in card3):
+        return 3
+    elif(card in card4):
+        return 4
+    elif(card in card5):
+        return 5
+    elif(card in card6):
+        return 6
+    elif(card in card7):
+        return 7
+    elif(card in card8):
+        return 8
+    elif(card in card9):
+        return 9
+    elif(card in card10):
+        return 10
+    elif(card in cardA):
+        return 11
+    else:
+        print("Error")
 
 # Begin main code
 # Init game
@@ -86,7 +118,7 @@ gameover = False
 # Create background
 background = pygame.Surface(screen.get_size())
 background = background.convert()
-background.fill((80, 150, 15))
+background.fill(green)
 hitButton = pygame.draw.rect(background, grey, (10, 445, 90, 40))
 standButton = pygame.draw.rect(background, grey, (10, 390, 90, 40))
 hitText = font.render("Hit", True, black)
@@ -98,12 +130,22 @@ screen.blit(hitText, (40, 458))
 screen.blit(standText, (25, 402))
 
 userCards = []
+userTotal = 0
 dealerCards = []
+dealerTotal = 0
 
 while(running):
     for event in pygame.event.get():
         if(event.type == pygame.QUIT):
             running = False
+        elif(event.type == pygame.MOUSEBUTTONDOWN and hitButton.collidepoint(event.pos) and not (gameover or stand)):
+            print("HIT TEST")
+            card = getCard()
+            value = getValue(card)
+            print(value)
+        elif(event.type == pygame.MOUSEBUTTONDOWN and standButton.collidepoint(event.pos) and not (gameover or stand)):
+            stand = True
+            print("STAND TEST")
 
     pygame.display.flip()
 
