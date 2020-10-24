@@ -75,10 +75,10 @@ black = (0, 0, 0)
 green = (80, 150, 15)
 red = (128, 10, 10)
 
-def getCard():
+def getCard(activeList):
     card = random.choice(cards)
     cards.remove(card)
-    screen.blit(card, (10, 10))
+    activeList.append(card)
     return card
 
 def getValue(card):
@@ -140,12 +140,17 @@ while(running):
             running = False
         elif(event.type == pygame.MOUSEBUTTONDOWN and hitButton.collidepoint(event.pos) and not (gameover or stand)):
             print("HIT TEST")
-            card = getCard()
-            value = getValue(card)
-            print(value)
+            card = getCard(userCards)
+            userTotal += getValue(card)
+            print(userTotal)
         elif(event.type == pygame.MOUSEBUTTONDOWN and standButton.collidepoint(event.pos) and not (gameover or stand)):
             stand = True
             print("STAND TEST")
+            while(dealerTotal < 17 and dealerTotal <= userTotal):
+                card = getCard(dealerCards)
+                dealerTotal += getValue(card)
+                print(dealerTotal)
+            print(dealerTotal)
 
     pygame.display.flip()
 
