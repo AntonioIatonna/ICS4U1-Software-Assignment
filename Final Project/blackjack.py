@@ -72,8 +72,11 @@ cardA = [ASpades, AClubs, AHearts, ADiamonds]
 # Colours
 grey = (192, 192, 192)
 black = (0, 0, 0)
-green = (80, 150, 15)
-red = (128, 10, 10)
+white = (255, 255, 255)
+greenTable = (80, 150, 15)
+redTable = (128, 10, 10)
+blueTable = (54, 95, 156)
+goldTable = (184, 132, 48)
 
 def getCard(activeList):
     card = random.choice(cards)
@@ -105,20 +108,32 @@ def getValue(card):
     else:
         print("Error")
 
+def updateGrpahics(score):
+    screen.fill(greenTable, (0, 0, 125, 100))
+    userScore = font.render("Player: " + str(userTotal), True, white)
+    dealerScore = font.render("Dealer: " + str(dealerTotal), True, white)
+    screen.blit(dealerScore, (10, 25))
+    screen.blit(userScore, (10, 50))
+
+
 # Begin main code
 # Init game
 pygame.init()
 screen = pygame.display.set_mode((650, 500))
 pygame.display.set_caption("Blackjack")
-font= pygame.font.SysFont('eras bold itc', 30)
+font = pygame.font.SysFont('eras bold itc', 30)
 running = True
 stand = False
 gameover = False
+userCards = []
+userTotal = 0
+dealerCards = []
+dealerTotal = 0
 
 # Create background
 background = pygame.Surface(screen.get_size())
 background = background.convert()
-background.fill(green)
+background.fill(greenTable)
 hitButton = pygame.draw.rect(background, grey, (10, 445, 90, 40))
 standButton = pygame.draw.rect(background, grey, (10, 390, 90, 40))
 hitText = font.render("Hit", True, black)
@@ -128,29 +143,29 @@ standText = font.render("Stand", True, black)
 screen.blit(background, (0, 0))
 screen.blit(hitText, (40, 458))
 screen.blit(standText, (25, 402))
-
-userCards = []
-userTotal = 0
-dealerCards = []
-dealerTotal = 0
+updateGrpahics(userTotal)
+updateGrpahics(dealerTotal)
 
 while(running):
     for event in pygame.event.get():
         if(event.type == pygame.QUIT):
             running = False
-        elif(event.type == pygame.MOUSEBUTTONDOWN and hitButton.collidepoint(event.pos) and not (gameover or stand)):
-            print("HIT TEST")
+        elif(event.type == pygame.MOUSEBUTTONDOWN and hitButton.collidepoint(event.pos) and not (gameover or stand)): # if user clicks hit
             card = getCard(userCards)
             userTotal += getValue(card)
+            for i in range(len(userCards)): # displays user cards on screen
+                x = 125 + i * 50
+                screen.blit(userCards[i], (x, 350))
             print(userTotal)
+            updateGrpahics(userTotal)
         elif(event.type == pygame.MOUSEBUTTONDOWN and standButton.collidepoint(event.pos) and not (gameover or stand)):
             stand = True
-            print("STAND TEST")
             while(dealerTotal < 17 and dealerTotal <= userTotal):
                 card = getCard(dealerCards)
                 dealerTotal += getValue(card)
                 print(dealerTotal)
-            print(dealerTotal)
+                updateGrpahics(dealerTotal)
+                time.sleep(1.5)
 
     pygame.display.flip()
 
