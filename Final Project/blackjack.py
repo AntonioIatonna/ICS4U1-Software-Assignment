@@ -108,13 +108,12 @@ def getValue(card):
     else:
         print("Error")
 
-def updateGrpahics(score):
-    screen.fill(greenTable, (0, 0, 125, 100))
+def updateScore(score):
+    screen.fill(blueTable, (0, 0, 125, 100))
     userScore = font.render("Player: " + str(userTotal), True, white)
     dealerScore = font.render("Dealer: " + str(dealerTotal), True, white)
     screen.blit(dealerScore, (10, 25))
     screen.blit(userScore, (10, 50))
-
 
 # Begin main code
 # Init game
@@ -125,6 +124,7 @@ font = pygame.font.SysFont('eras bold itc', 30)
 running = True
 stand = False
 gameover = False
+gameResult = ""
 userCards = []
 userTotal = 0
 dealerCards = []
@@ -133,7 +133,7 @@ dealerTotal = 0
 # Create background
 background = pygame.Surface(screen.get_size())
 background = background.convert()
-background.fill(greenTable)
+background.fill(blueTable)
 hitButton = pygame.draw.rect(background, grey, (10, 445, 90, 40))
 standButton = pygame.draw.rect(background, grey, (10, 390, 90, 40))
 hitText = font.render("Hit", True, black)
@@ -143,29 +143,44 @@ standText = font.render("Stand", True, black)
 screen.blit(background, (0, 0))
 screen.blit(hitText, (40, 458))
 screen.blit(standText, (25, 402))
-updateGrpahics(userTotal)
-updateGrpahics(dealerTotal)
+updateScore(userTotal)
+updateScore(dealerTotal)
 
 while(running):
     for event in pygame.event.get():
-        if(event.type == pygame.QUIT):
+        if(event.type == pygame.QUIT): # if user closes window end all operations
             running = False
-        elif(event.type == pygame.MOUSEBUTTONDOWN and hitButton.collidepoint(event.pos) and not (gameover or stand)): # if user clicks hit
+        elif(event.type == pygame.MOUSEBUTTONDOWN and hitButton.collidepoint(event.pos) and not (gameover or stand)): # if user hits
             card = getCard(userCards)
             userTotal += getValue(card)
             for i in range(len(userCards)): # displays user cards on screen
                 x = 125 + i * 50
                 screen.blit(userCards[i], (x, 350))
-            print(userTotal)
-            updateGrpahics(userTotal)
-        elif(event.type == pygame.MOUSEBUTTONDOWN and standButton.collidepoint(event.pos) and not (gameover or stand)):
+            updateScore(userTotal)
+        elif(event.type == pygame.MOUSEBUTTONDOWN and standButton.collidepoint(event.pos) and not (gameover or stand)): # if user stands
             stand = True
-            while(dealerTotal < 17 and dealerTotal <= userTotal):
+            while(dealerTotal < 17 and dealerTotal <= userTotal and userTotal != dealerTotal):
                 card = getCard(dealerCards)
                 dealerTotal += getValue(card)
-                print(dealerTotal)
-                updateGrpahics(dealerTotal)
+                for j in range(len(dealerCards)): # displays dealer cards on screen
+                    x = 125 + j * 50
+                    screen.blit(dealerCards[j], (x, 10))
+                updateScore(dealerTotal)
+                pygame.display.flip() # re-init display to prevent getting stuck in loop
                 time.sleep(1.5)
+        elif(dealerTotal == 21 or userTotal > 21 or dealerTotal >= 17 or dealerTotal > userTotal or (userTotal == dealerTotal and userTotal > 0)):
+            gameover = True
+            if(userTotal == dealerTotal):
+                gameResult = "Tie"
+                pos = 305
+            elif(userTotal == 21 or dealerTotal > 21 or (userTotal > dealerTotal and userTotal <= 21)):
+                gameResult = "User Wins"
+                pos = 275
+            elif(dealerTotal == 21 or userTotal > 21 or (dealerTotal > userTotal and dealerTotal <= 21)):
+                gameResult = "Dealer Wins"
+                pos = 255
+            resultText = font.render(gameResult, True, white)
+            screen.blit(resultText, (pos, 250))
 
     pygame.display.flip()
 
