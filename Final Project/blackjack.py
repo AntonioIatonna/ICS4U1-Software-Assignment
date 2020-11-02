@@ -168,7 +168,7 @@ while(running):
                 updateScore(dealerTotal)
                 pygame.display.flip() # re-init display to prevent getting stuck in loop
                 time.sleep(1.5)
-        elif(dealerTotal == 21 or userTotal > 21 or dealerTotal >= 17 or dealerTotal > userTotal or (userTotal == dealerTotal and userTotal > 0)):
+        elif(dealerTotal == 21 or userTotal > 21 or dealerTotal >= 17 or dealerTotal > userTotal or (userTotal == dealerTotal and userTotal > 0)): # if win conditions are met
             gameover = True
             if(userTotal == dealerTotal):
                 gameResult = "Tie"
