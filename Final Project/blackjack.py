@@ -146,6 +146,16 @@ screen.blit(standText, (25, 402))
 updateScore(userTotal)
 updateScore(dealerTotal)
 
+#display starting cards
+for y in range(2):
+    pygame.display.flip()
+    card = getCard(userCards)
+    userTotal += getValue(card)
+    x = 125 + y * 50
+    time.sleep(0.5)
+    screen.blit(userCards[y], (x, 350))
+    updateScore(userTotal)
+
 while(running):
     for event in pygame.event.get():
         if(event.type == pygame.QUIT): # if user closes window end all operations
