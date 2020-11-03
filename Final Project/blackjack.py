@@ -109,7 +109,7 @@ def getValue(card):
         print("Error")
 
 def updateScore(score):
-    screen.fill(greenTable, (0, 0, 125, 100))
+    screen.fill(backgroundColour, (0, 0, 125, 100))
     userScore = font.render("Player: " + str(userTotal), True, white)
     dealerScore = font.render("Dealer: " + str(dealerTotal), True, white)
     screen.blit(dealerScore, (10, 25))
@@ -129,11 +129,12 @@ userCards = []
 userTotal = 0
 dealerCards = []
 dealerTotal = 0
+backgroundColour = greenTable
 
 # Create background
 background = pygame.Surface(screen.get_size())
 background = background.convert()
-background.fill(greenTable)
+background.fill(backgroundColour)
 hitButton = pygame.draw.rect(background, grey, (10, 445, 90, 40))
 standButton = pygame.draw.rect(background, grey, (10, 390, 90, 40))
 hitText = font.render("Hit", True, black)
