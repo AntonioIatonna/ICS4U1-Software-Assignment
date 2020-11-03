@@ -106,9 +106,9 @@ def getValue(card):
     elif(card in cardA):
         return 11
     else:
-        print("Error")
+        print("Error") # if there is an error in retrieving the card or card value
 
-def updateScore(score):
+def updateScore(score): # preventing duplicate text by re-rendering score graphics
     screen.fill(backgroundColour, (0, 0, 125, 100))
     userScore = font.render("Player: " + str(userTotal), True, white)
     dealerScore = font.render("Dealer: " + str(dealerTotal), True, white)
@@ -177,7 +177,7 @@ while(running):
                     x = 125 + j * 50
                     screen.blit(dealerCards[j], (x, 10))
                 updateScore(dealerTotal)
-                pygame.display.flip() # re-init display to prevent getting stuck in loop
+                pygame.display.flip() # refresh display to prevent getting stuck in loop
                 time.sleep(1.5)
         elif(dealerTotal == 21 or userTotal > 21 or dealerTotal >= 17 or dealerTotal > userTotal or (userTotal == dealerTotal and userTotal > 0)): # if win conditions are met
             gameover = True
@@ -192,6 +192,7 @@ while(running):
                 pos = 255
             resultText = font.render(gameResult, True, white)
             screen.blit(resultText, (pos, 250))
+            break
 
     pygame.display.flip()
 
