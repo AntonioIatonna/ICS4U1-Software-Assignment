@@ -153,7 +153,7 @@ for y in range(2):
     card = getCard(userCards)
     userTotal += getValue(card)
     x = 125 + y * 50
-    time.sleep(0.5)
+    time.sleep(0.75)
     screen.blit(userCards[y], (x, 350))
     updateScore(userTotal)
 
@@ -193,7 +193,6 @@ while(running):
             resultText = font.render(gameResult, True, white)
             screen.blit(resultText, (pos, 250))
             break
-
     pygame.display.flip()
 
 pygame.quit()
