@@ -55,6 +55,7 @@ KSpades = pygame.image.load('Final Project/assets/cards/ks.png')
 KClubs = pygame.image.load('Final Project/assets/cards/kc.png')
 KHearts = pygame.image.load('Final Project/assets/cards/kh.png')
 KDiamonds = pygame.image.load('Final Project/assets/cards/kd.png')
+cardBack = pygame.image.load('Final Project/assets/cards/cardback.png')
 
 # Creating card arrays
 cards = [ASpades, AClubs, AHearts, ADiamonds, Spades2, Clubs2, Hearts2, Diamonds2, Spades3, Clubs3, Diamonds3, Spades4, Clubs4, Hearts4, Diamonds4, Spades5, Clubs5, Hearts5, Diamonds5, Spades6, Clubs6, Hearts6, Diamonds6, Spades7, Clubs7, Hearts7, Diamonds7, Spades8, Clubs8, Hearts8, Diamonds8, Spades9, Clubs9, Hearts9, Diamonds9, Spades10, Clubs10, Hearts10, Diamonds10, JSpades, JClubs, JHearts, JDiamonds, QSpades, QClubs, QHearts, QDiamonds, KSpades, KClubs, KHearts, KDiamonds]
@@ -157,6 +158,16 @@ for y in range(2):
     screen.blit(userCards[y], (x, 350))
     updateScore(userTotal)
 
+pygame.display.flip()
+time.sleep(0.75)
+card = getCard(dealerCards)
+dealerTotal += getValue(card)
+screen.blit(dealerCards[0], (125, 10))
+updateScore(dealerTotal)
+pygame.display.flip()
+time.sleep(0.75)
+screen.blit(cardBack, (175, 10))
+
 while(running):
     for event in pygame.event.get():
         if(event.type == pygame.QUIT): # if user closes window end all operations
@@ -170,6 +181,7 @@ while(running):
             updateScore(userTotal)
         elif(event.type == pygame.MOUSEBUTTONDOWN and standButton.collidepoint(event.pos) and not (gameover or stand)): # if user stands
             stand = True
+            time.sleep(0.5)
             while(dealerTotal < 17 and dealerTotal <= userTotal and userTotal != dealerTotal):
                 card = getCard(dealerCards)
                 dealerTotal += getValue(card)
@@ -185,11 +197,11 @@ while(running):
                 gameResult = "Tie"
                 pos = 305
             elif(userTotal == 21 or dealerTotal > 21 or (userTotal > dealerTotal and userTotal <= 21)):
-                gameResult = "User Wins"
-                pos = 275
+                gameResult = "Player Wins"
+                pos = 265
             elif(dealerTotal == 21 or userTotal > 21 or (dealerTotal > userTotal and dealerTotal <= 21)):
                 gameResult = "Dealer Wins"
-                pos = 255
+                pos = 265
             resultText = font.render(gameResult, True, white)
             screen.blit(resultText, (pos, 250))
             break
