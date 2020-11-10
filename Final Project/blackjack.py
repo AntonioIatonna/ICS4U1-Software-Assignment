@@ -148,7 +148,8 @@ screen.blit(standText, (25, 402))
 updateScore(userTotal)
 updateScore(dealerTotal)
 
-#display starting cards
+# display starting cards
+# user
 for y in range(2):
     pygame.display.flip()
     card = getCard(userCards)
@@ -158,6 +159,7 @@ for y in range(2):
     screen.blit(userCards[y], (x, 350))
     updateScore(userTotal)
 
+# dealer
 pygame.display.flip()
 time.sleep(0.75)
 card = getCard(dealerCards)
@@ -191,7 +193,7 @@ while(running):
                 updateScore(dealerTotal)
                 pygame.display.flip() # refresh display to prevent getting stuck in loop
                 time.sleep(1.5)
-        elif(dealerTotal == 21 or userTotal > 21 or dealerTotal >= 17 or dealerTotal > userTotal or (userTotal == dealerTotal and userTotal > 0)): # if win conditions are met
+        elif(dealerTotal == 21 or userTotal > 21 or dealerTotal >= 17 or (dealerTotal > userTotal and stand) or (userTotal == dealerTotal and userTotal > 0)): # if win conditions are met
             gameover = True
             if(userTotal == dealerTotal):
                 gameResult = "Tie"
